@@ -1,10 +1,12 @@
-import "express-async-errors"
+import "express-async-errors";
 import * as dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import morgan from "morgan";
 import Jobsrouter from "./routes/jobRouter.js";
 import mongoose from "mongoose";
+import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
+import authRouter from "./routes/authRouter.js";
 
 const app = express();
 
@@ -14,20 +16,15 @@ if (process.env.NODE_ENV === "development") {
 
 app.use(express.json());
 
-app.post("/", (req, res) => {
-  res.json({ message: "Data received", data: req.body });
-});
 
 app.use("/api/v1/jobs", Jobsrouter);
+app.use('/api/v1/auth',authRouter)
 
 app.use("*", (req, res) => {
   res.status(404).json({ msg: "NOT FOUND" });
 });
 
-app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(500).json({ msg: "something went wrong" });
-});
+app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 5100;
 
