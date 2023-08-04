@@ -4,13 +4,15 @@ import Job from "../modals/jobModels.js";
 //GET ALL JOBS
 
 export const getAllJobs = async (req, res) => {
-  const jobs = await Job.find({});
+
+  const jobs = await Job.find({createdBy:req.user.userId});
   res.status(StatusCodes.OK).json({ count: jobs.length, jobs });
 };
 
 //CREATE JOB
 
 export const createJob = async (req, res) => {
+  req.body.createdBy=req.user.userId;
   const job = await Job.create(req.body);
   res.status(StatusCodes.CREATED).json({ msg: "Job Created", job });
 };
