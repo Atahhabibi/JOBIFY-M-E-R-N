@@ -1,29 +1,52 @@
-import { Link } from "react-router-dom"
-import Wrapper from '../assets/wrappers/RegisterAndLoginPage';
+import { Link, Form, redirect, useNavigation } from "react-router-dom";
+import { toast } from "react-toastify";
+import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import { FormRow, Logo } from "../components";
+import customFetch from "../utils/customFetch";
+
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+  try {
+
+    await customFetch.post('/auth/login',data);
+    toast.success('Login Succesfull')
+    return redirect('/dashboard')
+  } catch (error) {
+    toast.error(error?.response?.data?.msg);
+    return error;
+  }
+};
 
 const Login = () => {
-  return<Wrapper>
 
-    <form className="form">
-      <Logo/>
-      <h4>Login</h4>
+  const navigation=useNavigation();
 
-      <FormRow type="email" name="email" defaultValue="john@gmail.com"/>
-      <FormRow type="password" name="password" defaultValue="john12345"/>
+  const isSubmitting=navigation.state==='submitting';
 
-      <button type="submit" className="btn btn-block">submit</button>
-      <button type="button" className="btn btn-block">explore the app</button>
-      <p>
+  return (
+    <Wrapper>
+      <Form method="post" className="form">
+        <Logo />
+        <h4>Login</h4>
+
+        <FormRow type="email" name="email" defaultValue="john@gmail.com" />
+        <FormRow type="password" name="password" defaultValue="john12345" />
+
+        <button type="submit" className="btn btn-block" disabled={isSubmitting}>
+          {isSubmitting?"submitting....":"submit"}
+        </button>
+        <button type="button" className="btn btn-block">
+          explore the app
+        </button>
+        <p>
           Not a member?
           <Link to="/register" className="member-btn">
-             Register
+            Register
           </Link>
         </p>
-    </form>
-
-
-   
-  </Wrapper> 
-}
-export default Login
+      </Form>
+    </Wrapper>
+  );
+};
+export default Login;
