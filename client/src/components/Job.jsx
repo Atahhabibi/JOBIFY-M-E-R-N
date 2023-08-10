@@ -38,8 +38,6 @@ const Job = ({
 
           <div className={`status ${jobStatus}`}>{jobStatus}</div>
         </div>
-      </div>
-
       <div className="actions">
         <Link className="btn edit-btn" to={`/dashboard/edit-job/${_id}`}>Edit</Link>
         <Form method="post" action={`/dashboard/delete-job/${_id}`}>
@@ -48,6 +46,8 @@ const Job = ({
           </button>
         </Form>
       </div>
+      </div>
+
     </Wrapper>
   );
 };

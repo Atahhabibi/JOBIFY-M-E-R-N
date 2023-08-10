@@ -1,17 +1,16 @@
-import { Link, Form, redirect, useNavigation } from "react-router-dom";
+import { Link, Form, redirect, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
-import { FormRow, Logo } from "../components";
+import { FormRow, Logo, SubmitBtn } from "../components";
 import customFetch from "../utils/customFetch";
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
   try {
-
-    await customFetch.post('/auth/login',data);
-    toast.success('Login Succesfull')
-    return redirect('/dashboard')
+    await customFetch.post("/auth/login", data);
+    toast.success("Login Succesfull");
+    return redirect("/dashboard");
   } catch (error) {
     toast.error(error?.response?.data?.msg);
     return error;
@@ -20,9 +19,25 @@ export const action = async ({ request }) => {
 
 const Login = () => {
 
-  const navigation=useNavigation();
+  const navigate = useNavigate();
 
-  const isSubmitting=navigation.state==='submitting';
+  const loginDemoUser = async () => {
+    const data = {
+      name: "Zippy",
+      email: "test@test.com",
+      password: "secret123",
+      lastName: "ShakeAndBake",
+      location: "Codeville",
+    };
+
+    try {
+      await customFetch.post("/auth/login", data);
+      toast.success("Take a test drive");
+      navigate("/dashboard");
+    } catch (error) {
+      toast.error(error?.response?.data?.msg);
+    }
+  };
 
   return (
     <Wrapper>
@@ -32,11 +47,8 @@ const Login = () => {
 
         <FormRow type="email" name="email" defaultValue="john@gmail.com" />
         <FormRow type="password" name="password" defaultValue="john12345" />
-
-        <button type="submit" className="btn btn-block" disabled={isSubmitting}>
-          {isSubmitting?"submitting....":"submit"}
-        </button>
-        <button type="button" className="btn btn-block">
+        <SubmitBtn />
+        <button type="button" className="btn btn-block" onClick={loginDemoUser}>
           explore the app
         </button>
         <p>
