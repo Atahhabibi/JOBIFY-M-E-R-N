@@ -1,5 +1,5 @@
 import BigSidebar from "./BigSidebar";
-import SmallSidebar from "./smallSidebar";
+import SmallSidebar from "./SmallSidebar";
 import FormRow from "./FormRow";
 import Logo from "./Logo";
 import Navbar from "./Navbar";
