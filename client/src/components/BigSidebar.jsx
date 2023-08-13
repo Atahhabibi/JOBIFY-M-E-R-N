@@ -1,6 +1,6 @@
 import Wrapper from "../assets/wrappers/BigSidebar";
 import Logo from "./Logo";
-import NavLinks from "./Navlinks";
+import NavLinks from "./NavLinks";
 import { useDashboardContext } from "../pages/DashboardLayout";
 
 const BigSidebar = () => {
