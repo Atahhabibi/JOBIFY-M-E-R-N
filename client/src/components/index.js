@@ -9,6 +9,7 @@ import AreaChart from "./AreaCharts";
 import BarCharts from "./BarCharts";
 import StatsContainer from "./StatsContainer";
 import ChartsContainer from "./ChartsContainer";
+import PageBtnContainer from "./PageBtnContainer";
 
 export {
   BigSidebar,
@@ -22,4 +23,5 @@ export {
   BarCharts,
   StatsContainer,
   ChartsContainer,
+  PageBtnContainer
 };
