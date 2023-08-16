@@ -1,7 +1,3 @@
-import multer from 'multer';
-import DataParser from 'datauri/parser.js'
-import path from 'path';
-
 import multer from "multer";
 import DataParser from "datauri/parser.js";
 import path from "path";
